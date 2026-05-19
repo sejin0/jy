@@ -6,7 +6,7 @@ const authRoutes = require("./src/routes/auth");
 const divinationRoutes = require("./src/routes/divinations");
 
 const app = express();
-const port = process.env.PORT || 4000;
+const PORT = process.env.PORT || 4000;
 
 app.use(cors({ origin: process.env.CLIENT_URL, credentials: true }));
 app.use(express.json());
@@ -27,6 +27,8 @@ app.use((err, req, res, next) => {
   res.status(500).json({ error: "internal_error", message: "서버 오류가 발생했습니다." });
 });
 
-app.listen(port, () => {
-  console.log(`API server listening on http://localhost:${port}`);
-});
+if (process.env.NODE_ENV !== 'production') {
+  app.listen(PORT, () => console.log(`서버 실행 중: http://localhost:${PORT}`));
+}
+
+module.exports = app; // ← 이 줄 추가
