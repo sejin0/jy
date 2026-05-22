@@ -2,6 +2,14 @@ import { useMemo, useState } from "react";
 import { api } from "../lib/api";
 import { getSessionToken } from "../lib/session";
 
+const MIN_CASTING_MS = 2000;
+
+function wait(ms) {
+  return new Promise((resolve) => {
+    setTimeout(resolve, ms);
+  });
+}
+
 export function useDivination(user, token) {
   const [view, setView] = useState("intro");
   const [question, setQuestion] = useState("");
@@ -17,6 +25,8 @@ export function useDivination(user, token) {
     setError("");
     setView("casting");
 
+    const startedAt = Date.now();
+
     try {
       const data = await api.cast({
         token,
@@ -24,9 +34,20 @@ export function useDivination(user, token) {
         category: "auto",
         sessionToken,
       });
+
+      const elapsed = Date.now() - startedAt;
+      if (elapsed < MIN_CASTING_MS) {
+        await wait(MIN_CASTING_MS - elapsed);
+      }
+
       setResult(data);
       setView("result");
     } catch (err) {
+      const elapsed = Date.now() - startedAt;
+      if (elapsed < MIN_CASTING_MS) {
+        await wait(MIN_CASTING_MS - elapsed);
+      }
+
       setError(err.message);
       setView("intro");
     } finally {

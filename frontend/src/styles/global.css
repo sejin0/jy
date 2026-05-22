@@ -110,6 +110,100 @@ input {
   animation: spin 1s linear infinite;
 }
 
+.casting-card {
+  position: relative;
+  overflow: hidden;
+  padding-top: 28px;
+  background:
+    radial-gradient(circle at top, rgba(255, 221, 154, 0.28), transparent 38%),
+    linear-gradient(180deg, #fffcf6 0%, #fff5e5 100%);
+}
+
+.casting-card h2 {
+  margin-bottom: 8px;
+}
+
+.casting-card > p {
+  position: relative;
+  z-index: 1;
+}
+
+.casting-hexagram {
+  position: relative;
+  z-index: 1;
+  display: flex;
+  min-height: 270px;
+  margin: 28px auto 20px;
+  width: min(240px, 100%);
+  flex-direction: column;
+  justify-content: center;
+  gap: 14px;
+}
+
+.casting-line {
+  display: flex;
+  justify-content: space-between;
+  gap: 18px;
+  opacity: 0;
+  transform: translateY(12px) scaleX(0.92);
+  transition:
+    opacity 220ms ease,
+    transform 280ms ease;
+}
+
+.casting-line.is-visible {
+  opacity: 1;
+  transform: translateY(0) scaleX(1);
+}
+
+.casting-line-solid,
+.casting-line-broken {
+  height: 14px;
+  border-radius: 999px;
+  background: linear-gradient(90deg, #7c2d12 0%, #c2410c 48%, #f59e0b 100%);
+  box-shadow:
+    0 6px 14px rgba(154, 52, 18, 0.22),
+    inset 0 1px 0 rgba(255, 255, 255, 0.35);
+}
+
+.casting-line-solid {
+  width: 100%;
+}
+
+.casting-line-broken {
+  width: calc(50% - 9px);
+}
+
+.casting-glow {
+  position: absolute;
+  left: 50%;
+  top: 52%;
+  width: 220px;
+  height: 220px;
+  border-radius: 50%;
+  background: radial-gradient(circle, rgba(245, 158, 11, 0.22) 0%, rgba(245, 158, 11, 0) 72%);
+  transform: translate(-50%, -50%);
+  animation: casting-breathe 1.8s ease-in-out infinite;
+}
+
+.casting-note {
+  color: var(--sub);
+  font-size: 14px;
+}
+
+@keyframes casting-breathe {
+  0%,
+  100% {
+    opacity: 0.45;
+    transform: translate(-50%, -50%) scale(0.92);
+  }
+
+  50% {
+    opacity: 0.82;
+    transform: translate(-50%, -50%) scale(1.06);
+  }
+}
+
 @keyframes spin {
   to {
     transform: rotate(360deg);
@@ -299,5 +393,10 @@ input {
 
   .result-hero-copy h2 {
     font-size: 25px;
+  }
+
+  .casting-hexagram {
+    min-height: 240px;
+    gap: 12px;
   }
 }
