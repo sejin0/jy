@@ -1,5 +1,5 @@
 const db = require("../db/pool");
-const { randomHexagram } = require("../lib/hexagrams");
+const { buildInterpretation, randomHexagram } = require("../lib/hexagrams");
 const { detectCategory, weightedScore } = require("../lib/keywords");
 
 async function cast(req, res, next) {
@@ -44,7 +44,9 @@ async function cast(req, res, next) {
 
     return res.status(201).json({
       ...saved,
-      interpretation: hex.interpretation,
+      meaning: hex.meaning,
+      advice: hex.advice,
+      interpretation: buildInterpretation(hex, category),
     });
   } catch (err) {
     return next(err);

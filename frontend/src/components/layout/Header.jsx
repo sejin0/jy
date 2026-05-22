@@ -15,11 +15,7 @@ export default function Header({ user, onHistory, onReset, onLogout, onOpenAuth 
         <Button variant="ghost" onClick={onReset}>
           새로 시작
         </Button>
-        {user ? (
-          <Button onClick={onLogout}>로그아웃</Button>
-        ) : (
-          <Button onClick={onOpenAuth}>로그인</Button>
-        )}
+        {user ? <Button onClick={onLogout}>로그아웃</Button> : null}
       </div>
     </header>
   );
